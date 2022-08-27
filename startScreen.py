@@ -28,7 +28,7 @@ class start_Screen:
         self.play_button = Button(self.screen, "Create Alert", ul=(centerx - 105 , 400))
 
         n = len(self.texts)
-        # self.rects = [self.get_text_rect(text=self.texts[i], centerx=centerx, centery=self.posns[i]) for i in range(n)]
+        self.rects = [self.get_text_rect(text=self.texts[i], centerx=centerx, centery=self.posns[i]) for i in range(n)]
 
     def get_text(self, font, msg, color):
         return font.render(msg, True, color, BLACK)
