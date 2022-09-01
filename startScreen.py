@@ -41,14 +41,22 @@ class start_Screen:
         rect.centery = centery
         return rect
 
-    def mouse_on_button(self):
+    def mouse_on_alert(self):
         mouse_x, mouse_y = pg.mouse.get_pos()
         return self.create_alert_btn.rect.collidepoint(mouse_x, mouse_y)
+
+    def mouse_on_watchlist(self):
+        mouse_x, mouse_y = pg.mouse.get_pos()
+        return self.watchlist_btn.rect.collidepoint(mouse_x, mouse_y)
 
     def check_events(self):
         for e in pg.event.get():
             if e.type == pg.MOUSEBUTTONDOWN:
-                if self.mouse_on_button():
+                if self.mouse_on_alert():
+                    self.alert_btn_click = True
+                    self.start_Screen_finished = True
+                if self.mouse_on_watchlist():
+                    self.watchlist_btn_click = True
                     self.start_Screen_finished = True
             if e.type == pg.QUIT:
                 sys.exit()
