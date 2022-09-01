@@ -2,6 +2,8 @@ from sys import exit
 from settings import Settings
 from time import sleep
 from startScreen import start_Screen
+from createAlert import create_Alert
+from creatWatchlist import create_Watchlist
 import pygame as pg
 
 class Start:
@@ -26,7 +28,14 @@ def main():
     ss = start_Screen(start=application)
     ss.show()
 
-    # second =
+    ca = create_Alert(start=application)  # to prepare start_sc display
+    wl = create_Watchlist(start=application)  # to repare watch_List display
+
+    if(ss.alert_btn_click == True):
+        ca.show()
+    if(ss.watchlist_btn_click == True):
+        wl.show()
+
 
 if __name__ == '__main__':
     main()
