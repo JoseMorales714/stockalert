@@ -13,6 +13,8 @@ class start_Screen:
     def __init__(self, start):
         self.screen = start.screen
         self.start_Screen_finished = False
+        self.alert_btn_click = False
+        self.watchlist_btn_click = False
 
         headingFont = pg.font.SysFont(None, 192)
         subheadingFont = pg.font.SysFont(None, 122)
@@ -25,7 +27,7 @@ class start_Screen:
         self.posns.extend(idk)
 
         centerx = self.screen.get_rect().centerx
-        self.play_button = Button(self.screen, "Create Alert", ul=(centerx - 105 , 400))
+        self.create_alert_btn = Button(self.screen, "Create Alert", ul=(centerx - 105 , 400))
 
         n = len(self.texts)
         self.rects = [self.get_text_rect(text=self.texts[i], centerx=centerx, centery=self.posns[i]) for i in range(n)]
@@ -41,7 +43,7 @@ class start_Screen:
 
     def mouse_on_button(self):
         mouse_x, mouse_y = pg.mouse.get_pos()
-        return self.play_button.rect.collidepoint(mouse_x, mouse_y)
+        return self.create_alert_btn.rect.collidepoint(mouse_x, mouse_y)
 
     def check_events(self):
         for e in pg.event.get():
@@ -62,9 +64,8 @@ class start_Screen:
         for i in range(n):
             self.screen.blit(self.texts[i], self.rects[i])
 
-
     def draw(self):
         self.screen.fill(BLACK)
         self.draw_text()
-        self.play_button.draw()
+        self.create_alert_btn.draw()
         pg.display.flip()
