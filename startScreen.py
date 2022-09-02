@@ -28,6 +28,8 @@ class start_Screen:
 
         centerx = self.screen.get_rect().centerx
         self.create_alert_btn = Button(self.screen, "Create Alert", ul=(centerx - 105 , 400))
+        self.watchlist_btn= Button(self.screen, "Watchlist", ul=(centerx - 105, 450))
+        self.exit_btn = Button(self.screen, "Exit", ul=(centerx - 105, 500))
 
         n = len(self.texts)
         self.rects = [self.get_text_rect(text=self.texts[i], centerx=centerx, centery=self.posns[i]) for i in range(n)]
@@ -76,4 +78,6 @@ class start_Screen:
         self.screen.fill(BLACK)
         self.draw_text()
         self.create_alert_btn.draw()
+        self.watchlist_btn.draw()
+        self.exit_btn.draw()
         pg.display.flip()
