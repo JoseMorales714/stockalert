@@ -13,7 +13,7 @@ class create_Alert:
     def __init__(self, start):
         self.screen = start.screen
         self.create_Alert_finished = False
-        self.alert_list = []  # An empty list will be made to hold the tickers
+        self.alert_list = set()  # An empty list will be made to hold the tickers
         try:
             with open('watchlist.txt', 'rb') as fh:
                 self.alert_list = pickle.load(fh)
@@ -58,7 +58,7 @@ class create_Alert:
     # add a ticker to the list, with a limit of 5
     def add_list(self, tckr):
         if len(self.alert_list) < 5:
-            self.alert_list.append(str.upper(tckr))
+            self.alert_list.add(str.upper(tckr))
             with open('watchlist.txt', 'wb') as fh:
                 pickle.dump(self.alert_list, fh)
                 print('file saved')
