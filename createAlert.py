@@ -1,3 +1,4 @@
+import string
 import sys
 import pygame as pg
 import pygame.event
@@ -12,7 +13,7 @@ class create_Alert:
     def __init__(self, start):
         self.screen = start.screen
         self.create_Alert_finished = False
-        self.alert_list = [] # An empty list will be made to hold the tickers
+        self.alert_list = []  # An empty list will be made to hold the tickers
         try:
             with open('watchlist.txt', 'rb') as fh:
                 self.alert_list = pickle.load(fh)
@@ -25,13 +26,14 @@ class create_Alert:
         CLOCK = pygame.time.Clock()
         refresh_rate = CLOCK.tick(30)
         Manager = pygame_gui.UIManager((w, h))
-        input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((10, 10), (80, 40)), manager=Manager,
+        input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((10, 50), (150, 40)), manager=Manager,
                                                     object_id="#main_text_entry")
-        input.set_forbidden_characters('numbers')
+        input.set_text('enter ticker here')
+        input.set_allowed_characters(list(map(str, string.ascii_letters)))  # only allow alphabet
         font = pygame.font.Font(None, 32)
-        text = font.render('Enter stock tckr', (0, 0, 0), False)
-        textRect =  text.get_rect()
-        textRect.center = (500, 500)
+        # text = font.render('Enter stock ticker:', (0, 0, 0), False)
+        # textRect = text.get_rect()
+        # textRect.center = (105, 70)
 
         while True:
             for event in pygame.event.get():
@@ -41,11 +43,12 @@ class create_Alert:
                 if event.type == pygame_gui.UI_TEXT_ENTRY_FINISHED and event.ui_object_id == "#main_text_entry":
                     self.add_list(event.text)
                     print(self.get_list())
+                    input.set_text('')
                 Manager.process_events(event)
             Manager.update(refresh_rate/10000)
             self.screen.fill('blue')
             Manager.draw_ui(self.screen)
-            self.screen.blit(text, textRect)
+            # self.screen.blit(text, textRect)
             pygame.display.update()
 
     # return the tickers the user wants
@@ -55,7 +58,7 @@ class create_Alert:
     # add a ticker to the list, with a limit of 5
     def add_list(self, tckr):
         if len(self.alert_list) < 5:
-            self.alert_list.append(tckr)
+            self.alert_list.append(str.upper(tckr))
             with open('watchlist.txt', 'wb') as fh:
                 pickle.dump(self.alert_list, fh)
                 print('file saved')
