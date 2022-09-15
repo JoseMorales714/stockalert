@@ -62,6 +62,12 @@ class create_Alert:
         else:
             print('capacity has been reached')
 
+    def return_tickers_list(self):
+        return self.alert_list
+
+
+
+
 
 
 
