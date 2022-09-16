@@ -35,6 +35,11 @@ class create_Alert:
         # textRect = text.get_rect()
         # textRect.center = (105, 70)
 
+        
+        # to send an email, we can have a bool and if its true it will send the email
+        # this conditional statemnet for the bool can be inside the while True block
+        # however, we still need the user's email so we'll have to get user input in GUI form
+        
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
