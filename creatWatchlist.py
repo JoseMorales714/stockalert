@@ -3,6 +3,7 @@ import pygame as pg
 import pygame.event
 import pygame_gui
 from button import Button
+# from start import Start
 from startScreen import start_Screen
 
 BLACK = (0, 0, 0)
@@ -12,7 +13,7 @@ def get_font(size):
     return pygame.font.Font(None, size)
 
 
-class create_Watchlist:
+class create_Watchlist():
     def __init__(self, start):
         self.screen = start.screen
         self.create_Watchlist_page_finished = False
@@ -26,6 +27,7 @@ class create_Watchlist:
     def check_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                run = False
                 pygame.quit()
                 exit()
             if event.type == pygame_gui.UI_TEXT_ENTRY_FINISHED and event.ui_object_id == "#main_text_entry":
@@ -36,25 +38,28 @@ class create_Watchlist:
                     self.back_btn_click = True
                     self.create_Watchlist_page_finished = True
 
+
+
+
         ## the rest of the code below should be arranged in draw()
-        w = 700
-        h = 700
-        CLOCK = pygame.time.Clock()
-        refresh_rate = CLOCK.tick(30)
-        Manager = pygame_gui.UIManager((w, h))
-        input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((10, 10), (80, 40)), manager=Manager,
-
-                                                 object_id="#main_text_entry")
-
-
-
-                Manager.process_events(event)
-            Manager.update(refresh_rate/10000)
-            PLAY_MOUSE_POS = pygame.mouse.get_pos()
-            Manager.draw_ui(self.screen)
-            PLAY_TEXT = get_font(160).render("Watchlist", True, "Green")
-            PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 100))
-            self.screen.blit(PLAY_TEXT, PLAY_RECT)
+        # w = 700
+        # h = 700
+        # CLOCK = pygame.time.Clock()
+        # refresh_rate = CLOCK.tick(30)
+        # Manager = pygame_gui.UIManager((w, h))
+        # input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((10, 10), (80, 40)), manager=Manager,
+        #
+        #                                          object_id="#main_text_entry")
+        #
+        #
+        #
+        #         Manager.process_events(event)
+        #     Manager.update(refresh_rate/10000)
+        #     PLAY_MOUSE_POS = pygame.mouse.get_pos()
+        #     Manager.draw_ui(self.screen)
+        #     PLAY_TEXT = get_font(160).render("Watchlist", True, "Green")
+        #     PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 100))
+        #     self.screen.blit(PLAY_TEXT, PLAY_RECT)
 
     def draw(self):
         self.screen.fill(BLACK)
@@ -62,21 +67,9 @@ class create_Watchlist:
 
         pg.display.flip()
 
-    def show(self):
+    def show_Watchlist(self):
         while not self.create_Watchlist_page_finished:
             self.draw()
             self.check_events()
 
-
-            ##pygame.display.update()
-
-
-
-
-
-
-
-
-
-
-
+            pygame.display.update()
