@@ -15,6 +15,7 @@ class start_Screen:
         self.start_Screen_finished = False
         self.alert_btn_click = False
         self.watchlist_btn_click = False
+        self.exit_btn_click = False
 
         headingFont = pg.font.SysFont(None, 192)
         subheadingFont = pg.font.SysFont(None, 122)
@@ -51,6 +52,10 @@ class start_Screen:
         mouse_x, mouse_y = pg.mouse.get_pos()
         return self.watchlist_btn.rect.collidepoint(mouse_x, mouse_y)
 
+    def mouse_on_exit(self):
+        mouse_x, mouse_y = pg.mouse.get_pos()
+        return self.exit_btn.rect.collidepoint(mouse_x, mouse_y)
+
     def check_events(self):
         for e in pg.event.get():
             if e.type == pg.MOUSEBUTTONDOWN:
@@ -59,6 +64,9 @@ class start_Screen:
                     self.start_Screen_finished = True
                 if self.mouse_on_watchlist():
                     self.watchlist_btn_click = True
+                    self.start_Screen_finished = True
+                if self.mouse_on_exit():
+                    self.exit_btn_click = True
                     self.start_Screen_finished = True
             if e.type == pg.QUIT:
                 sys.exit()
