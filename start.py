@@ -23,6 +23,7 @@ class Start:
       print('\nTerminating\n')
       exit()
 
+value = False
 def main():
     application = Start()
     ss = start_Screen(start=application)
@@ -34,8 +35,9 @@ def main():
     if(ss.alert_btn_click == True):
         ca.show()
     if(ss.watchlist_btn_click == True):
-        wl.show()
-
+        wl.show_Watchlist()
+        if(wl.back_btn_click):
+            main()
 
 if __name__ == '__main__':
     main()
