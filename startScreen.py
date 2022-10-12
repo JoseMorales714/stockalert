@@ -1,7 +1,7 @@
 import sys
 import pygame as pg
 from button import Button
-
+from menuAnimation import menu_Animation
 
 GREEN = (0, 255, 0)
 WHITE = (255, 255, 255)
@@ -88,4 +88,5 @@ class start_Screen:
         self.create_alert_btn.draw()
         self.watchlist_btn.draw()
         self.exit_btn.draw()
+
         pg.display.flip()

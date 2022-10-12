@@ -1,6 +1,8 @@
 import sys
 import os
 import smtplib
+import yfinance as yf
+
 ## from email.message import EmailMessage
 
 email_addr = 'serviceburner714@gmail.com'
@@ -27,3 +29,12 @@ class create_email:
             msg = f'Subject: {subject}\n\n{body}'
 
             smtp.sendmail('serviceburner714@gmail.com', user_email, msg)
+
+    def check_update(self, list):
+        # this gets ticker and assigns it to tick
+        tick = yf.Ticker(list)
+        # this allows to get price from 
+        yo = tick.info
+        yo_price = yo['regularMarketPrice']
+
+        print(yo_price)
