@@ -39,32 +39,23 @@ class create_Watchlist():
                     self.create_Watchlist_page_finished = True
 
 
-
-
-        ## the rest of the code below should be arranged in draw()
-        # w = 700
-        # h = 700
-        # CLOCK = pygame.time.Clock()
-        # refresh_rate = CLOCK.tick(30)
-        # Manager = pygame_gui.UIManager((w, h))
-        # input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((10, 10), (80, 40)), manager=Manager,
-        #
-        #                                          object_id="#main_text_entry")
-        #
-        #
-        #
-        #         Manager.process_events(event)
-        #     Manager.update(refresh_rate/10000)
-        #     PLAY_MOUSE_POS = pygame.mouse.get_pos()
-        #     Manager.draw_ui(self.screen)
-        #     PLAY_TEXT = get_font(160).render("Watchlist", True, "Green")
-        #     PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 100))
-        #     self.screen.blit(PLAY_TEXT, PLAY_RECT)
+   
 
     def draw(self):
         self.screen.fill(BLACK)
         self.back_btn.draw()
-
+        pygame.display.set_caption("Watchlist")
+        Icon = pygame.image.load("watchlist.svg.png")
+        pygame.display.set_icon(Icon)
+        PLAY_TEXT = get_font(120).render("Watchlist", True, "Green")
+        PLAY_RECT = PLAY_TEXT.get_rect(center=(500, 100))
+        self.screen.blit(PLAY_TEXT, PLAY_RECT)
+        PLAY_TEXT = get_font(80).render("apple", True, "red")   # just and idea how it will look
+        PLAY_RECT = PLAY_TEXT.get_rect(center=(200, 180))
+        self.screen.blit(PLAY_TEXT, PLAY_RECT)
+        PLAY_TEXT = get_font(80).render("120", True, "green")  # price
+        PLAY_RECT = PLAY_TEXT.get_rect(center=(350, 180))
+        self.screen.blit(PLAY_TEXT, PLAY_RECT)
         pg.display.flip()
 
     def show_Watchlist(self):
