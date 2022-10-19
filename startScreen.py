@@ -1,5 +1,7 @@
 import sys
 import pygame as pg
+import time
+
 from button import Button
 from menuAnimation import menu_Animation
 
@@ -8,7 +10,7 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 GREY = (130, 130, 130)
-
+#pg.init()
 class start_Screen:
     def __init__(self, start):
         self.screen = start.screen
@@ -28,12 +30,17 @@ class start_Screen:
         self.posns.extend(idk)
 
         centerx = self.screen.get_rect().centerx
-        self.create_alert_btn = Button(self.screen, "Create Alert", ul=(centerx - 105 , 400))
+        centery = self.screen.get_rect().centery
+        self.create_alert_btn = Button(self.screen, "Create Alert", ul=(centerx - 105, 400))
         self.watchlist_btn= Button(self.screen, "Watchlist", ul=(centerx - 105, 450))
         self.exit_btn = Button(self.screen, "Exit", ul=(centerx - 105, 500))
 
         n = len(self.texts)
         self.rects = [self.get_text_rect(text=self.texts[i], centerx=centerx, centery=self.posns[i]) for i in range(n)]
+
+        self.images = pg.image.load(f'pics/stockanimate-13.png.png')
+        self.images = pg.transform.scale(self.images, (1200, 800))
+        #pg.display.flip()
 
     def get_text(self, font, msg, color):
         return font.render(msg, True, color, BLACK)
@@ -57,18 +64,28 @@ class start_Screen:
         return self.exit_btn.rect.collidepoint(mouse_x, mouse_y)
 
     def check_events(self):
+        click = pg.mixer.Sound("mixkit-classic-click-1117.wav")
+        exit_click = pg.mixer.Sound("mixkit-interface-click-1126.wav")
         for e in pg.event.get():
             if e.type == pg.MOUSEBUTTONDOWN:
                 if self.mouse_on_alert():
+                    pg.mixer.Sound.play(click)
+                    pg.mixer.music.stop()
                     self.alert_btn_click = True
                     self.start_Screen_finished = True
                 if self.mouse_on_watchlist():
+                    pg.mixer.Sound.play(click)
+                    pg.mixer.music.stop()
                     self.watchlist_btn_click = True
                     self.start_Screen_finished = True
                 if self.mouse_on_exit():
+                    pg.mixer.Sound.play(exit_click)
+                    pg.mixer.music.stop()
+                    time.sleep(1)
                     self.exit_btn_click = True
                     self.start_Screen_finished = True
             if e.type == pg.QUIT:
+                pg.quit()
                 sys.exit()
 
 
@@ -76,6 +93,7 @@ class start_Screen:
         while not self.start_Screen_finished:
             self.draw()
             self.check_events()  # exits game if QUIT pressed
+
 
     def draw_text(self):
         n = len(self.texts)
@@ -88,5 +106,6 @@ class start_Screen:
         self.create_alert_btn.draw()
         self.watchlist_btn.draw()
         self.exit_btn.draw()
-
+        self.screen.blit(self.images, (0, 0))
+        pg.display.update()
         pg.display.flip()
