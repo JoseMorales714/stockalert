@@ -3,8 +3,10 @@ import sys
 import pygame as pg
 import pygame.event
 import pygame_gui
+from mail import create_email
 from settings import Settings
 import pickle
+from button import Button
 
 # Allow user to input stocks. There will be a 5 stock limit
 try:
@@ -25,12 +27,8 @@ class create_Alert:
     def __init__(self, start):
         self.screen = start.screen
         self.create_Alert_finished = False
-        self.alert_list = set()  # An empty list will be made to hold the tickers
-        try:
-            with open('watchlist.txt', 'rb') as fh:
-                self.alert_list = pickle.load(fh)
-        except FileNotFoundError:
-            print('File not found')
+        self.alert_list = []  # An empty list will be made to hold the tickers
+        self.haveUser = False
 
     def show(self):
         w = 900
@@ -71,33 +69,55 @@ class create_Alert:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
-                if event.type == pygame_gui.UI_TEXT_ENTRY_FINISHED and event.ui_object_id == "#main_text_entry":
-                    self.add_list(event.text)
+                if event.type == pygame_gui.UI_TEXT_ENTRY_CHANGED and (event.ui_object_id == "#main_text_entry"):
+                    confirmation_button.set_text('Add')
+                    confirmation_button.enable()
+                if event.type == pygame_gui.UI_BUTTON_PRESSED and event.ui_object_id == '#confirm':
+                    self.add_list(input.text)
                     print(self.get_list())
                     input.set_text('')
+                    confirmation_button.disable()
+                if event.type == pygame_gui.UI_BUTTON_PRESSED and event.ui_object_id == '#finished':
+                    alert = create_email()
+                    alert.send_email(user_email=email_address, stocks=alert_list)
+                if event.type == pygame_gui.UI_TEXT_ENTRY_FINISHED and event.ui_object_id == "#username_text_entry":
+                    self.get_user(event.text)
+                    print(self.get_list())
+                    print(email_address)
+                    input.kill()
+                    input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((10, 50), (150, 40)),
+                                                                manager=Manager,
+                                                                object_id="#main_text_entry")
+                    input.set_text('enter ticker')
+
                 Manager.process_events(event)
-            Manager.update(refresh_rate/10000)
+            Manager.update(refresh_rate / 10000)
             self.screen.fill('blue')
             Manager.draw_ui(self.screen)
-            # self.screen.blit(text, textRect)
+            self.screen.blit(text, textRect)
             pygame.display.update()
 
     # return the tickers the user wants
     def get_list(self):
-        return self.alert_list
+        return alert_list
 
     # add a ticker to the list, with a limit of 5
     def add_list(self, tckr):
-        if len(self.alert_list) < 5:
-            self.alert_list.add(str.upper(tckr))
+        print(tckr)
+        if len(alert_list) < 5:
+            alert_list.add(str.upper((tckr)))
             with open('watchlist.txt', 'wb') as fh:
-                pickle.dump(self.alert_list, fh)
-                print('file saved')
+                pickle.dump(alert_list, fh)
+                print('File saved')
         else:
             print('capacity has been reached')
 
-    def return_tickers_list(self):
-        return self.alert_list
+    def get_user(self, username):
+        # self.alert_list[username] = set()
+        self.haveUser = True
+        with open('email.txt', 'wb') as fh:
+            pickle.dump(username, fh)
+            print('file saved')
 
 
 
