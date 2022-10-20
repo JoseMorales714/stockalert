@@ -3,6 +3,7 @@ import pygame as pg
 import pygame.event
 import pygame_gui
 from button import Button
+from createAlert import alert_list
 # from start import Start
 from startScreen import start_Screen
 
@@ -42,20 +43,28 @@ class create_Watchlist():
    
 
     def draw(self):
+        display_list = []  # will contain the renders for each tckr
+        for i in alert_list:  # for every tckr
+            PLAY_TEXT = get_font(90).render('$' + str(i), True, "Green")  # create a render
+            display_list.append(PLAY_TEXT)  # append it to display_list
         self.screen.fill(BLACK)
         self.back_btn.draw()
         pygame.display.set_caption("Watchlist")
         Icon = pygame.image.load("watchlist.svg.png")
         pygame.display.set_icon(Icon)
-        PLAY_TEXT = get_font(120).render("Watchlist", True, "Green")
-        PLAY_RECT = PLAY_TEXT.get_rect(center=(500, 100))
-        self.screen.blit(PLAY_TEXT, PLAY_RECT)
-        PLAY_TEXT = get_font(80).render("apple", True, "red")   # just and idea how it will look
-        PLAY_RECT = PLAY_TEXT.get_rect(center=(200, 180))
-        self.screen.blit(PLAY_TEXT, PLAY_RECT)
-        PLAY_TEXT = get_font(80).render("120", True, "green")  # price
-        PLAY_RECT = PLAY_TEXT.get_rect(center=(350, 180))
-        self.screen.blit(PLAY_TEXT, PLAY_RECT)
+        # PLAY_TEXT = get_font(120).render("Watchlist", True, "Green")
+        # PLAY_RECT = PLAY_TEXT.get_rect(center=(500, 100))
+        # self.screen.blit(PLAY_TEXT, PLAY_RECT)
+        # PLAY_TEXT = get_font(80).render("apple", True, "red")   # just and idea how it will look
+        # PLAY_RECT = PLAY_TEXT.get_rect(center=(200, 180))
+        # self.screen.blit(PLAY_TEXT, PLAY_RECT)
+        # PLAY_TEXT = get_font(80).render("120", True, "green")  # price
+        # PLAY_RECT = PLAY_TEXT.get_rect(center=(350, 180))
+        # self.screen.blit(PLAY_TEXT, PLAY_RECT)
+        y = 100
+        for d in display_list:  # for every render in display_list
+            self.screen.blit(d, PLAY_TEXT.get_rect(center=(640, y)))  # blit
+            y += 50  # so that the next rect is lower on the screen
         pg.display.flip()
 
     def show_Watchlist(self):
