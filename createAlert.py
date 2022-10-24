@@ -7,6 +7,7 @@ from mail import create_email
 from settings import Settings
 import pickle
 from button import Button
+import yfinance as yf
 
 # Allow user to input stocks. There will be a 5 stock limit
 try:

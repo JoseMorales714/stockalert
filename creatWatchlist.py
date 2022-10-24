@@ -6,6 +6,7 @@ from button import Button
 from createAlert import alert_list
 # from start import Start
 from startScreen import start_Screen
+import yfinance as yf
 
 BLACK = (0, 0, 0)
 
@@ -39,19 +40,18 @@ class create_Watchlist():
                     self.back_btn_click = True
                     self.create_Watchlist_page_finished = True
 
-
-   
-
     def draw(self):
         display_list = []  # will contain the renders for each tckr
         for i in alert_list:  # for every tckr
-            PLAY_TEXT = get_font(90).render('$' + str(i), True, "Green")  # create a render
+            ticker = yf.Ticker(str(i))
+            price = str(ticker.info['regularMarketPrice'])
+            PLAY_TEXT = get_font(90).render('$' + str(i) + ' ' + price, True, "Green")  # create a render
             display_list.append(PLAY_TEXT)  # append it to display_list
         self.screen.fill(BLACK)
         self.back_btn.draw()
         pygame.display.set_caption("Watchlist")
-        Icon = pygame.image.load("watchlist.svg.png")
-        pygame.display.set_icon(Icon)
+        # Icon = pygame.image.load("watchlist.svg.png")
+        # pygame.display.set_icon(Icon)
         # PLAY_TEXT = get_font(120).render("Watchlist", True, "Green")
         # PLAY_RECT = PLAY_TEXT.get_rect(center=(500, 100))
         # self.screen.blit(PLAY_TEXT, PLAY_RECT)
