@@ -10,6 +10,7 @@ from button import Button
 import yfinance as yf
 
 # Allow user to input stocks. There will be a 5 stock limit
+
 try:
     with open('watchlist.txt', 'rb') as fh:
         alert_list = pickle.load(fh)
@@ -74,6 +75,9 @@ class create_Alert:
                     confirmation_button.set_text('Add')
                     confirmation_button.enable()
                 if event.type == pygame_gui.UI_BUTTON_PRESSED and event.ui_object_id == '#confirm':
+                    ticker = yf.Ticker(input.text)
+                    if (ticker.info['regularMarketPrice'] == None):
+                        raise NameError("You did not input a correct stock ticker! Try again.")
                     self.add_list(input.text)
                     print(self.get_list())
                     input.set_text('')
