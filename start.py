@@ -5,7 +5,7 @@ from startScreen import start_Screen
 from createAlert import create_Alert
 from creatWatchlist import create_Watchlist
 import pygame as pg
-
+print('delete this')
 class Start:
     def __init__(self):
         pg.init()
