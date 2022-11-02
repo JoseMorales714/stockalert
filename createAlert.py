@@ -9,8 +9,6 @@ import pickle
 from button import Button
 import yfinance as yf
 
-# Allow user to input stocks. There will be a 5 stock limit
-
 try:
     with open('watchlist.txt', 'rb') as fh:
         alert_list = pickle.load(fh)
@@ -62,9 +60,6 @@ class create_Alert:
                                                         object_id="#username_text_entry")
             input.set_text('enter email')
 
-        # to send an email, we can have a bool and if its true it will send the email
-        # this conditional statemnet for the bool can be inside the while True block
-        # however, we still need the user's email so we'll have to get user input in GUI form
 
         while True:
             for event in pygame.event.get():
@@ -118,7 +113,6 @@ class create_Alert:
             print('capacity has been reached')
 
     def get_user(self, username):
-        # self.alert_list[username] = set()
         self.haveUser = True
         with open('email.txt', 'wb') as fh:
             pickle.dump(username, fh)
