@@ -69,7 +69,7 @@ class create_Alert:
                                                         object_id="#username_text_entry")
             input.set_text('enter email')
 
-        while True:
+        while not self.create_Alert_finished:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -89,7 +89,7 @@ class create_Alert:
                     alert = create_email()
                     alert.send_email(user_email=email_address, stocks=alert_list)
                 if event.type == pygame_gui.UI_BUTTON_PRESSED and event.ui_object_id == "#back":
-                    pygame.quit()
+                    self.create_Alert_finished = True
                 if event.type == pygame_gui.UI_BUTTON_PRESSED and event.ui_object_id == "#change":
                     open('email.txt', 'w').close()
                     open('watchlist.txt', 'w').close()
