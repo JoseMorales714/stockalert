@@ -34,6 +34,8 @@ def main():
 
     if(ss.alert_btn_click == True):
         ca.show()
+        if ca.create_Alert_finished == True:
+            main()
     if(ss.watchlist_btn_click == True):
         wl.show_Watchlist()
         if(wl.back_btn_click):
