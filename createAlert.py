@@ -56,7 +56,10 @@ class create_Alert:
         back_button = pygame_gui.elements.UIButton(text='return', manager=Manager,
                                                    relative_rect=pygame.Rect((110, 150), (100, 50)),
                                                    object_id='#back')
-        if email_address != '':  # TO DO: add how to check for valid email
+        if email_address != '':
+            changeEmail_button = pygame_gui.elements.UIButton(text='change email', manager=Manager,
+                                                              relative_rect=pygame.Rect((610, 100), (150, 50)),
+                                                              object_id='#change')
             print(email_address)
             input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((10, 50), (150, 40)), manager=Manager,
                                                         object_id="#main_text_entry")
@@ -68,6 +71,7 @@ class create_Alert:
             input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((10, 50), (350, 40)), manager=Manager,
                                                         object_id="#username_text_entry")
             input.set_text('enter email')
+            input.set_forbidden_characters([' '])  # no spaces allowed
 
         while not self.create_Alert_finished:
             for event in pygame.event.get():
