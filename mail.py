@@ -7,7 +7,7 @@ import yfinance as yf
 
 email_addr = 'serviceburner714@gmail.com'
 email_pass = 'ktilnzouhwxgdbdj'
-user_email = 'moralesjose1428@gmail.com'            ## need to get user input for email
+
 
 class create_email:
     def __init__(self, start):
@@ -15,7 +15,7 @@ class create_email:
         self.create_Email_page_finished = False
 
 
-    def send_email(self):
+    def send_email(self, user_email, stocks):
 
         with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
             smtp.ehlo()                             ## secures email
@@ -25,7 +25,7 @@ class create_email:
             smtp.login(email_addr, email_pass)
 
             subject = 'Stock Alert Confirmation'
-            body = 'You have created an alert for the following stock: '        ## need to include stock symbol
+            body = 'You have created an alert for the following stocks: \n' + str(stocks)
             msg = f'Subject: {subject}\n\n{body}'
 
             smtp.sendmail('serviceburner714@gmail.com', user_email, msg)
@@ -36,5 +36,4 @@ class create_email:
         # this allows to get price from 
         yo = tick.info
         yo_price = yo['regularMarketPrice']
-
         print(yo_price)

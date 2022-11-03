@@ -81,28 +81,29 @@ class create_Alert:
                 if event.type == pygame_gui.UI_TEXT_ENTRY_CHANGED and (event.ui_object_id == "#main_text_entry"):
                     confirmation_button.set_text('Add')
                     confirmation_button.enable()
-                if event.type == pygame_gui.UI_BUTTON_PRESSED and event.ui_object_id == '#confirm':
-                    ticker = yf.Ticker(input.text)
-                    if (ticker.info['regularMarketPrice'] == None):
-                        raise NameError("You did not input a correct stock ticker! Try again.")
-                    self.add_list(input.text)
-                    print(self.get_list())
-                    input.set_text('')
-                    confirmation_button.disable()
-                if event.type == pygame_gui.UI_BUTTON_PRESSED and event.ui_object_id == '#finished':
-                    alert = create_email()
-                    alert.send_email(user_email=email_address, stocks=alert_list)
-                if event.type == pygame_gui.UI_BUTTON_PRESSED and event.ui_object_id == "#back":
-                    self.create_Alert_finished = True
-                if event.type == pygame_gui.UI_BUTTON_PRESSED and event.ui_object_id == "#change":
-                    open('email.txt', 'w').close()
-                    open('watchlist.txt', 'w').close()
-                    changeEmail_button.kill()
-                    input.kill()
-                    input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((10, 50), (350, 40)),
-                                                                manager=Manager,
-                                                                object_id="#username_text_entry")
-                    input.set_text('enter email')
+                if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                    if event.ui_object_id == '#confirm':
+                        ticker = yf.Ticker(input.text)
+                        if (ticker.info['regularMarketPrice'] == None):
+                            raise NameError("You did not input a correct stock ticker! Try again.")
+                        self.add_list(input.text)
+                        print(self.get_list())
+                        input.set_text('')
+                        confirmation_button.disable()
+                    if event.ui_object_id == '#finished':
+                        alert = create_email()
+                        alert.send_email(user_email=email_address, stocks=alert_list)
+                    if event.ui_object_id == '#back':
+                        self.create_Alert_finished = True
+                    if event.ui_object_id == "#change":
+                        open('email.txt', 'w').close()
+                        open('watchlist.txt', 'w').close()
+                        changeEmail_button.kill()
+                        input.kill()
+                        input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((10, 50), (350, 40)),
+                                                                    manager=Manager,
+                                                                    object_id="#username_text_entry")
+                        input.set_text('enter email')
 
                 if event.type == pygame_gui.UI_TEXT_ENTRY_FINISHED and event.ui_object_id == "#username_text_entry":
                     self.get_user(event.text)
