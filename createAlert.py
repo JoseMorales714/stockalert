@@ -15,12 +15,18 @@ try:
 except FileNotFoundError:
     alert_list = set()
     print('File watchlist.txt not found ')
+except EOFError:
+    alert_list = set()
+    print("No input to read")
 try:
     with open('email.txt', 'rb') as fh:
         email_address = pickle.load(fh)
 except FileNotFoundError:
     email_address = ''
     print('File email.txt not found ')
+except EOFError:
+    email_address = ''
+    print("No input to read")
 
 
 class create_Alert:
@@ -44,9 +50,12 @@ class create_Alert:
                                                            relative_rect=pygame.Rect((10, 100), (100, 50)),
                                                            object_id='#confirm')
         confirmation_button.disable()
-        done_button = pygame_gui.elements.UIButton(text='done', manager=Manager,
+        done_button = pygame_gui.elements.UIButton(text='alert', manager=Manager,
                                                    relative_rect=pygame.Rect((110, 100), (100, 50)),
                                                    object_id='#finished')
+        back_button = pygame_gui.elements.UIButton(text='return', manager=Manager,
+                                                   relative_rect=pygame.Rect((110, 150), (100, 50)),
+                                                   object_id='#back')
         if email_address != '':  # TO DO: add how to check for valid email
             print(email_address)
             input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((10, 50), (150, 40)), manager=Manager,
@@ -59,7 +68,6 @@ class create_Alert:
             input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((10, 50), (350, 40)), manager=Manager,
                                                         object_id="#username_text_entry")
             input.set_text('enter email')
-
 
         while True:
             for event in pygame.event.get():
@@ -80,6 +88,18 @@ class create_Alert:
                 if event.type == pygame_gui.UI_BUTTON_PRESSED and event.ui_object_id == '#finished':
                     alert = create_email()
                     alert.send_email(user_email=email_address, stocks=alert_list)
+                if event.type == pygame_gui.UI_BUTTON_PRESSED and event.ui_object_id == "#back":
+                    pygame.quit()
+                if event.type == pygame_gui.UI_BUTTON_PRESSED and event.ui_object_id == "#change":
+                    open('email.txt', 'w').close()
+                    open('watchlist.txt', 'w').close()
+                    changeEmail_button.kill()
+                    input.kill()
+                    input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((10, 50), (350, 40)),
+                                                                manager=Manager,
+                                                                object_id="#username_text_entry")
+                    input.set_text('enter email')
+
                 if event.type == pygame_gui.UI_TEXT_ENTRY_FINISHED and event.ui_object_id == "#username_text_entry":
                     self.get_user(event.text)
                     print(self.get_list())
@@ -88,8 +108,10 @@ class create_Alert:
                     input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((10, 50), (150, 40)),
                                                                 manager=Manager,
                                                                 object_id="#main_text_entry")
+                    changeEmail_button = pygame_gui.elements.UIButton(text='change email', manager=Manager,
+                                                                      relative_rect=pygame.Rect((610, 100), (150, 50)),
+                                                                      object_id='#change')
                     input.set_text('enter ticker')
-
                 Manager.process_events(event)
             Manager.update(refresh_rate / 10000)
             self.screen.fill('blue')
@@ -108,7 +130,7 @@ class create_Alert:
             alert_list.add(str.upper((tckr)))
             with open('watchlist.txt', 'wb') as fh:
                 pickle.dump(alert_list, fh)
-                print('File saved')
+                print('watchlist File saved')
         else:
             print('capacity has been reached')
 
@@ -116,7 +138,7 @@ class create_Alert:
         self.haveUser = True
         with open('email.txt', 'wb') as fh:
             pickle.dump(username, fh)
-            print('file saved')
+            print('user file saved')
 
 
 
