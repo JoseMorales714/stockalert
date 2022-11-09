@@ -3,7 +3,8 @@
      {
          "colours":
          {
-            "normal_bg":"#603813,#b29f94, 90"
+            "normal_bg":"#3E98BC",
+           "normal_border": "#c9d6ff"
          }
      }
 }
