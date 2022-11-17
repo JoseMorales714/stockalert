@@ -29,12 +29,17 @@ except EOFError:
 
 class create_Alert:
     def __init__(self, start):
-        self.screen = start.screen
+        self.settings = Settings()
+        self.screen = pg.display.set_mode((1200,
+                                           800))
         self.create_Alert_finished = False
         # self.alert_list = []  # An empty list will be made to hold the tickers
         self.haveUser = False
 
     def show(self):
+        bg = pg.image.load("mountains.jpeg")
+        bg = pg.transform.scale(bg, (1200, 800))
+
         w = 1200
         h = 800
         CLOCK = pygame.time.Clock()
@@ -107,10 +112,9 @@ class create_Alert:
                     changeEmail_button = pygame_gui.elements.UIButton(text='change email', manager=Manager,
                                                                       relative_rect=pygame.Rect((w - 180, 30), (150, 50)),
                                                                       object_id='#change')
-                    input.set_text('Enter ticker')
                 Manager.process_events(event)
             Manager.update(refresh_rate / 10000)
-            self.screen.fill((35, 41, 49))
+            self.screen.blit(bg, (0, 0))
             Manager.draw_ui(self.screen)
             self.screen.blit(text, textRect)
             pygame.display.update()

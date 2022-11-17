@@ -14,7 +14,6 @@ class create_email:
         self.screen = start.screen
         self.create_Email_page_finished = False
 
-
     def send_email(self, user_email, stocks):
 
         with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
