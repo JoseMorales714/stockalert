@@ -1,10 +1,43 @@
 {
-     "defaults":
-     {
-         "colours":
-         {
-            "normal_bg":"#3E98BC",
-           "normal_border": "#c9d6ff"
-         }
-     }
+  "defaults":
+  {
+    "colours":
+    {
+      "normal_bg":"#0070b3",
+      "normal_border": "#3E98BC"
+    }
+  },
+  "button":
+  {
+    "colours":
+    {
+      "hovered_bg": "#0070b3",
+      "hovered_text": "#ff9100"
+    },
+    "font":
+    {
+      "name": "Anton",
+      "size": "18",
+      "regular_resource": {
+        "package": "stockalert",
+        "resource": "Anton-Regular.ttf"
+      }
+    }
+  },
+  "text_entry_line":
+  {
+    "font":
+    {
+      "name": "Anton",
+      "size": "18",
+      "regular_resource": {
+        "package": "stockalert",
+        "resource": "Anton-Regular.ttf"
+      }
+    },
+    "colours":
+    {
+      "normal_text": "#255"
+    }
+  }
 }
