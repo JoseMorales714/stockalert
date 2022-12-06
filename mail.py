@@ -10,8 +10,7 @@ email_pass = 'ktilnzouhwxgdbdj'
 
 
 class create_email:
-    def __init__(self, start):
-        self.screen = start.screen
+    def __init__(self):
         self.create_Email_page_finished = False
 
     def send_email(self, user_email, stocks):
