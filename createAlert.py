@@ -9,6 +9,7 @@ import pickle
 import yfinance as yf
 
 # TO DO: Maybe make the ticker input box a button at first that tells you to enter a ticker and changes to input box when clicked
+# Maybe you dont have to keep using kill to get rid of buttons, use visible instead
 try:
     with open('watchlist.txt', 'rb') as fh:
         alert_list = pickle.load(fh)
@@ -47,9 +48,10 @@ class create_Alert:
         font = pygame.font.Font(None, 36)
         # welcomeText = font.render('Welcome, ' + str(email_address), True, (255, 165, 0), None)
         # welcomeTextRect = welcomeText.get_rect()
-        pygame_gui.elements.UIButton(text='Alert', manager=Manager,
+        Alert_button = pygame_gui.elements.UIButton(text='Alert', manager=Manager,
                                      relative_rect=pygame.Rect(w / 2 - 50, h / 2 + 20, 100, 40),
                                      object_id='#finished')
+        Alert_button.visible = 0
         pygame_gui.elements.UIButton(text='Return', manager=Manager,
                                      relative_rect=pygame.Rect(35, h - 160, 100, 50),
                                      object_id='#back')
@@ -88,10 +90,13 @@ class create_Alert:
                 if event.type == pygame_gui.UI_BUTTON_PRESSED:
                     if event.ui_object_id == '#finished':
                         alert = create_email()
-                        alert.send_email(user_email=email_address, stocks=alert_list)
+                        with open('email.txt', 'rb') as fh:
+                            e = pickle.load(fh)
+                        alert.send_email(user_email=e, stocks=alert_list)
                     if event.ui_object_id == '#back':
                         self.create_Alert_finished = True
                     if event.ui_object_id == "#change":
+                        Alert_button.visible = 0 # we dont need alert button. alert list will be empty
                         open('email.txt', 'w').close()
                         open('watchlist.txt', 'w').close()
                         changeEmail_button.kill()
@@ -107,6 +112,7 @@ class create_Alert:
                         print(email_address)
                         Emailinput.kill()
                         Tickerinput = make_ticker_input(w, h, Manager)
+                        Alert_button.visible = 1
                         changeEmail_button = pygame_gui.elements.UIButton(text='change email', manager=Manager,
                                                                           relative_rect=pygame.Rect((w - 180, 30),
                                                                                                     (150, 50)),
