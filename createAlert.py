@@ -37,8 +37,7 @@ class create_Alert:
         self.haveUser = False
 
     def show(self):
-        bg = pg.image.load("mountains.jpeg")
-        bg = pg.transform.scale(bg, (1200, 800))
+        bg = pg.transform.scale(pg.image.load("mountains.jpeg"), (1200, 800))
 
         w = 1200
         h = 800

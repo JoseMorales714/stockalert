@@ -1,6 +1,8 @@
 import sys
 import pygame as pg
 import time
+import cv2
+import pygame.display
 
 from button import Button
 from menuAnimation import menu_Animation
@@ -11,6 +13,7 @@ BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 GREY = (130, 130, 130)
 #pg.init()
+
 class start_Screen:
     def __init__(self, start):
         self.screen = start.screen
@@ -41,6 +44,7 @@ class start_Screen:
         self.images = pg.image.load(f'pics/stockanimate-13.png.png')
         self.images = pg.transform.scale(self.images, (1200, 800))
         #pg.display.flip()
+
 
     def get_text(self, font, msg, color):
         return font.render(msg, True, color, BLACK)
@@ -93,6 +97,26 @@ class start_Screen:
         while not self.start_Screen_finished:
             self.draw()
             self.check_events()  # exits game if QUIT pressed
+            video = cv2.VideoCapture("loop.mp4")
+            success, video_img = video.read()
+            shape = video_img.shape[1::-1]
+            video_surface = pygame.image.frombuffer(video_img.tobytes(), shape, "BGR")
+
+            clock = pygame.time.Clock()
+            self.screen.blit(video_surface, (0, 0))
+            run = success
+            while run and not self.start_Screen_finished:
+
+                self.check_events()  # exits game if QUIT pressed
+                clock.tick(30)
+                success, img = video.read()
+                try:
+                    img_surface = pygame.image.frombuffer(img.tobytes(), img.shape[1::-1], "BGR")
+                except:
+                    video = cv2.VideoCapture("loop.mp4")
+                self.screen.blit(pg.transform.scale(img_surface, (1200,800)), (0, 0))
+                self.draw()
+                pg.display.update()
 
 
     def draw_text(self):
@@ -101,11 +125,7 @@ class start_Screen:
             self.screen.blit(self.texts[i], self.rects[i])
 
     def draw(self):
-        self.screen.fill(BLACK)
-        self.draw_text()
+        #self.draw_text()
         self.create_alert_btn.draw()
         self.watchlist_btn.draw()
         self.exit_btn.draw()
-        self.screen.blit(self.images, (0, 0))
-        pg.display.update()
-        pg.display.flip()

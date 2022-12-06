@@ -18,10 +18,7 @@
     {
       "name": "Anton",
       "size": "18",
-      "regular_resource": {
-        "package": "stockalert",
-        "resource": "Anton-Regular.ttf"
-      }
+      "regular_path": "Anton-Regular.ttf"
     }
   },
   "text_entry_line":
@@ -30,14 +27,11 @@
     {
       "name": "Anton",
       "size": "18",
-      "regular_resource": {
-        "package": "stockalert",
-        "resource": "Anton-Regular.ttf"
-      }
+      "regular_path": "Anton-Regular.ttf"
     },
     "colours":
     {
-      "normal_text": "#255"
+      "normal_text": "#0070b3"
     }
   }
 }
