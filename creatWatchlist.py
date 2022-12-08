@@ -20,7 +20,7 @@ class create_Watchlist():
 
     def show(self):
         bg = pg.image.load("createwatchlist.png")
-        bg = pg.transform.scale(bg,(1200, 600))
+        bg = pg.transform.scale(bg, (1200, 600))
         w = 1200
         h = 800
         CLOCK = pygame.time.Clock()
@@ -28,22 +28,19 @@ class create_Watchlist():
         PLAY_RECT = PLAY_TEXT.get_rect(center=(600, 100))
         refresh_rate = CLOCK.tick(30)
         Manager = pygame_gui.UIManager((w, h), 'theme.json')
-        click = pg.mixer.Sound("mixkit-classic-click-1117.wav") #adds sound
+        click = pg.mixer.Sound("mixkit-classic-click-1117.wav")  # adds sound
 
-
-
-       #BUTTONS
+        # BUTTONS
         pygame_gui.elements.UIButton(text='Back', manager=Manager, relative_rect=pygame.Rect(35, 10, 100, 50),
                                      object_id='#back')
-        pygame_gui.elements.UIButton(text='Clear', manager=Manager, relative_rect=pygame.Rect(1000,520,100,50),
+        pygame_gui.elements.UIButton(text='Clear', manager=Manager, relative_rect=pygame.Rect(1000, 520, 100, 50),
                                      object_id='clear')
-
-
+        alert_time = 200
         while not self.create_Watchlist_page_finished:
             display_list = []  # will contain the renders for each tckr
-            #for i in alert_list:  # for every tckr
+            # for i in alert_list:  # for every tckr
 
-                #pg.display.update()
+            # pg.display.update()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -53,36 +50,35 @@ class create_Watchlist():
                     print(self.get_list())
                 if event.type == pygame_gui.UI_BUTTON_PRESSED:
                     if event.ui_object_id == '#back':
-                      pg.mixer.Sound.play(click)
-                      pg.mixer.music.stop()
-                      self.create_Watchlist_page_finished = True
+                        pg.mixer.Sound.play(click)
+                        pg.mixer.music.stop()
+                        self.create_Watchlist_page_finished = True
+                        break
                     if event.ui_object_id == 'clear':
                         pg.mixer.Sound.play(click)
                         pg.mixer.music.stop()
-                        open('watchlist.txt','w').close()
+                        open('watchlist.txt', 'w').close()
 
                 Manager.process_events(event)
             Manager.update(refresh_rate / 10000)
-            self.screen.blit(bg, (0,0))
+            self.screen.blit(bg, (0, 0))
             Manager.draw_ui(self.screen)
             pygame.display.set_caption("Watchlist")
             Icon = pygame.image.load("watchlist.svg.png")
             pygame.display.set_icon(Icon)
             self.screen.blit(PLAY_TEXT, PLAY_RECT)
-            for i in alert_list:
-                ticker = yf.Ticker(str(i))
-                price = str(ticker.info['regularMarketPrice'])
-                PLAY_TEXT1 = get_font(90).render('$' + str(i) + ' ' + price, True, "White")  # create a render
-                display_list.append(PLAY_TEXT1)
-            y = 200
-            for d in display_list:  # for every render in display_list
-                self.screen.blit(d, PLAY_TEXT1.get_rect(center=(600, y)))  # blit
-                y += 100  # so that the next rect is lower on the screen
-            pygame.display.update()
-
-
-
-
-
-
+            if alert_time == 200:
+                alert_time = 0
+                for i in alert_list:
+                    ticker = yf.Ticker(str(i))
+                    price = str(ticker.info['regularMarketPrice'])
+                    PLAY_TEXT1 = get_font(90).render('$' + str(i) + ' ' + price, True, "White")  # create a render
+                    display_list.append(PLAY_TEXT1)
+                y = 200
+                for d in display_list:  # for every render in display_list
+                    self.screen.blit(d, PLAY_TEXT1.get_rect(center=(600, y)))  # blit
+                    y += 100  # so that the next rect is lower on the screen
+                pygame.display.update()
+            alert_time += 1
+            print(alert_time)
 
