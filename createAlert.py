@@ -68,6 +68,7 @@ class create_Alert:
                                                               object_id='#change')
             print(email_address)
             Tickerinput.visible = 1
+            Alert_button.visible = 1
         else:
             print('No user')
             Emailinput.visible = 1
