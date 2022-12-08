@@ -6,6 +6,7 @@ from createAlert import create_Alert
 from creatWatchlist import create_Watchlist
 import pygame as pg
 
+
 class Start:
     def __init__(self):
         pg.init()
@@ -37,9 +38,10 @@ def main():
         if ca.create_Alert_finished == True:
             main()
     if(ss.watchlist_btn_click == True):
-        wl.show_Watchlist()
-        if(wl.back_btn_click):
+        wl.show()
+        if(wl.create_Watchlist_page_finished == True):
             main()
+
 
 if __name__ == '__main__':
     main()
