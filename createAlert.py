@@ -131,9 +131,10 @@ class create_Alert:
                         welcomeTextRect.center = (w / 2, 60)
 
                     if event.ui_object_id == "#main_text_entry":
-                        ticker = yf.Ticker(Tickerinput.text)
-                        if ticker.info['regularMarketPrice'] == None:
-                            raise NameError("You did not input a correct stock ticker! Try again.")
+                        stock = yf.Ticker(Tickerinput.text)
+                        if stock.info['regularMarketPrice'] == None:
+                            Tickerinput.set_text("")
+                            print("invalid")
                         else:  # valid ticker, add to the list
                             print(Tickerinput.text)
                             if len(alert_list) < 5:
